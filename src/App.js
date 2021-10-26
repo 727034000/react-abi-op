@@ -1,13 +1,16 @@
+import {useState} from 'react'
+//antd依赖
 import {Input, Button} from 'antd';
 import 'antd/dist/antd.css';
-import {useState} from 'react'
+//clipboard依赖
 import {CopyToClipboard} from 'react-copy-to-clipboard'
+//toast依赖
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const {TextArea} = Input;
 
-function inArray(search, array) {
+export const inArray = (search, array) => {
     for (var i in array) {
         if (array[i] == search) {
             return true;
@@ -21,13 +24,11 @@ function App() {
     const [functionlist, setFunctionlist] = useState('')
     const [newcontent, setNewcontent] = useState('')
     const [copied, setCopied] = useState(false)
-    const kk = () => {
+    const op = () => {
         setNewcontent('')
         const OldList = JSON.parse(oldcontent.trim())
         const FunctionList = functionlist.split(',')
         let NewList = []
-        console.log(OldList)
-        console.log(FunctionList)
         for (let i = 0; i < OldList.length; i++) {
             if (inArray(OldList[i].name, FunctionList) && OldList[i].type === 'function') {
                 NewList.push(OldList[i])
@@ -35,7 +36,7 @@ function App() {
         }
         setNewcontent(JSON.stringify(NewList))
     }
-    const kk2 = () => {
+    const clear = () => {
         setNewcontent()
     }
     const notify = () => toast("已复制", {
@@ -54,19 +55,17 @@ function App() {
                 <h1 className="h1">精简Abi代码</h1>
                 <div className="old">输入原始abi代码</div>
                 <TextArea rows={5} showCount className="new" onChange={(e) => {
-                    console.log(e.target.value)
                     setOldcontent(e.target.value)
                 }}/>
                 <div className="new">输入保留的方法</div>
                 <TextArea rows={2} className="new" onChange={(e) => {
-                    console.log(e.target.value)
                     setFunctionlist(e.target.value)
                 }}/>
-                <div><Button type="button" onClick={() => kk()}>精简</Button></div>
+                <div><Button type="button" onClick={() => op()}>精简</Button></div>
                 <div className="new">精简后的代码</div>
                 <TextArea rows={5} showCount className="new" value={newcontent}/>
                 <div>
-                    <Button type="button" onClick={() => kk2()}>清空</Button>
+                    <Button type="button" onClick={() => clear()}>清空</Button>
                     <CopyToClipboard text={newcontent}
                                      onCopy={() => {
                                          setCopied(true)
