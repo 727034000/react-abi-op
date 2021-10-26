@@ -1,0 +1,20 @@
+.App {
+  padding: 10px;
+}
+.old,.new {
+  line-height:50px;
+  marigin:50px
+}
+
+.primary {
+  text-align: center;
+  margin-left: 50px;
+}
+
+.button {
+  line-height:50px;
+  marigin-left:50px;
+}
+.h1 {
+  text-align: center;
+}
